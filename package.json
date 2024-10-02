@@ -1,0 +1,12 @@
+{
+  "name": "zapwallet-backend",
+  "version": "1.0.0",
+  "description": "This is the backend for ZapWallet, built using Express.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
