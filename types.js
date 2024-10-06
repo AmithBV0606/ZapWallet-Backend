@@ -20,7 +20,7 @@ const UpdateUserSchema = zod.object({
 
 const transferSchema = zod.object({
     to: zod.string(),
-    amount: zod.number()
+    amount: zod.number().positive()
 })
 
 module.exports = {

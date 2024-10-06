@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 // Internal imports
 const { Account } = require("../models/db.js");
+const { transferSchema } = require("../types.js");
 
 const handleBalanceCheck = async (req, res) => {
     const userId = req.userId;
@@ -22,6 +23,15 @@ const handleTransfer = async (req, res) => {
     // Start the transaction
     session.startTransaction();
     const { to, amount } = req.body;
+
+    const validate = transferSchema.safeParse(req.body);
+
+    if (validate.success === false) {
+        await session.abortTransaction();
+        return res.status(409).json({
+            message: "Amount cannot be negative."
+        });
+    }
 
     // Fetch the accounts within the transaction
 
