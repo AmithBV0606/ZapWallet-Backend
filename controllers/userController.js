@@ -131,6 +131,8 @@ const handleUpdateUserInfo = async (req, res) => {
 const handleSearchUser = async (req, res) => {
   const filter = req.query.filter || "";
 
+  const myUserId = req.userId;
+
   const users = await User.find({
     $or: [
       { firstname: { $regex: filter, $options: "i" } }, // Case insensitive search
@@ -139,12 +141,14 @@ const handleSearchUser = async (req, res) => {
   });
 
   res.json({
-    users: users.map((user) => ({
-      username: user.username,
-      firstName: user.firstname,
-      lastName: user.lastname,
-      _id: user._id,
-    })),
+    users: users
+      .filter((user) => user._id.toString() !== myUserId.toString())
+      .map((user) => ({
+        username: user.username,
+        firstName: user.firstname,
+        lastName: user.lastname,
+        _id: user._id,
+      }))
   });
 };
 
