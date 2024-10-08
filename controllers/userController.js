@@ -159,7 +159,9 @@ const handleMe = async (req, res) => {
   const signedInUser = await User.findById(userId);
 
   res.json({
-    signedInUser
+    username: signedInUser.username,
+    firstName: signedInUser.firstname,
+    lastName: signedInUser.lastname
   });
 };
 
