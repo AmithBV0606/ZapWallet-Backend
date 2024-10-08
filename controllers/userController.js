@@ -56,7 +56,7 @@ const handleSignup = async (req, res) => {
     await Account.create({
       userId,
       balance: 1 + Math.random() * 10000,
-    })
+    });
 
     res.status(200).json({
       message: "User created successfully",
@@ -131,29 +131,21 @@ const handleUpdateUserInfo = async (req, res) => {
 const handleSearchUser = async (req, res) => {
   const filter = req.query.filter || "";
 
-  try {
-    const users = await User.find({
-      $or: [
-        { firstname: { "$regex": filter, "$options": "i" } }, // Case insensitive search
-        { lastname: { "$regex": filter, "$options": "i" } }
-      ]
-    });
+  const users = await User.find({
+    $or: [
+      { firstname: { $regex: filter, $options: "i" } }, // Case insensitive search
+      { lastname: { $regex: filter, $options: "i" } },
+    ],
+  });
 
-    if (users && users.length > 0) {
-      res.json({
-        users: users.map(user => ({
-          username: user.username,
-          firstName: user.firstname,
-          lastName: user.lastname,
-          _id: user._id
-        }))
-      });
-    } else {
-      res.status(404).json({ message: "No such user exists!" });
-    }
-  } catch (error) {
-    res.status(500).json({ message: "Server error!", error });
-  }
+  res.json({
+    users: users.map((user) => ({
+      username: user.username,
+      firstName: user.firstname,
+      lastName: user.lastname,
+      _id: user._id,
+    })),
+  });
 };
 
 module.exports = {
