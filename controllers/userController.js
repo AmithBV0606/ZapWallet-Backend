@@ -148,7 +148,18 @@ const handleSearchUser = async (req, res) => {
         firstName: user.firstname,
         lastName: user.lastname,
         _id: user._id,
-      }))
+      })),
+  });
+};
+
+// 4) Controllers for getting the signedin user information
+const handleMe = async (req, res) => {
+  const userId = req.userId;
+
+  const signedInUser = await User.findById(userId);
+
+  res.json({
+    signedInUser
   });
 };
 
@@ -157,4 +168,5 @@ module.exports = {
   handleSignin,
   handleUpdateUserInfo,
   handleSearchUser,
+  handleMe,
 };
