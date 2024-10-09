@@ -72,4 +72,4 @@ const handleTransfer = async (req, res) => {
 module.exports = {
     handleBalanceCheck,
     handleTransfer
-}
+} 

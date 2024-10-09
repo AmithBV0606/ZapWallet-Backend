@@ -60,7 +60,7 @@ const handleSignup = async (req, res) => {
 
     res.status(200).json({
       message: "User created successfully",
-      jwt: token,
+      token: token,
     });
   }
 };
@@ -159,9 +159,11 @@ const handleMe = async (req, res) => {
   const signedInUser = await User.findById(userId);
 
   res.json({
-    username: signedInUser.username,
-    firstName: signedInUser.firstname,
-    lastName: signedInUser.lastname
+    userInfo: {
+      username: signedInUser.username,
+      firstName: signedInUser.firstname,
+      lastName: signedInUser.lastname,
+    },
   });
 };
 
